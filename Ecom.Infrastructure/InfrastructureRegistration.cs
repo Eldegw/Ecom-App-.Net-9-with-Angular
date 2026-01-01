@@ -1,9 +1,12 @@
 ﻿using Ecom.Core.Interfaces;
+using Ecom.Core.Services;
 using Ecom.Infrastructure.Data;
 using Ecom.Infrastructure.Repositries;
+using Ecom.Infrastructure.Repositries.service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,11 @@ namespace Ecom.Infrastructure
             {
                 option.UseSqlServer(configuration.GetConnectionString("EcomDatabase"));
             });
+
+            services.AddSingleton<IimageManagementSerives, ImageManagementService>();
+            
+            services.AddSingleton<IFileProvider>(
+                new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
             return services;
         }

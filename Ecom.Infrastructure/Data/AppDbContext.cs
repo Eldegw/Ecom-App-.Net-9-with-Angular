@@ -1,7 +1,9 @@
 ﻿using Ecom.Core.Entities;
+using Ecom.Core.Entities.Order;
 using Ecom.Core.Entities.Product;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,9 @@ namespace Ecom.Infrastructure.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Photo>  Photos { get; set; }
         public virtual DbSet<Address>  Addresses { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
+        public virtual DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
 
 

@@ -4,16 +4,19 @@ using Ecom.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Ecom.Infrastructure.Data.migrations
+namespace Ecom.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260128235833_Order_Tables")]
+    partial class Order_Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,24 +163,6 @@ namespace Ecom.Infrastructure.Data.migrations
                     b.HasKey("Id");
 
                     b.ToTable("DeliveryMethods");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DeliveryTime = "Only one week",
-                            Description = "The fast delivery in the world ",
-                            Name = "DHL",
-                            Price = 15m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DeliveryTime = "Only take two week",
-                            Description = "Make your product save",
-                            Name = "XXD",
-                            Price = 12m
-                        });
                 });
 
             modelBuilder.Entity("Ecom.Core.Entities.Order.OrderItem", b =>
@@ -198,8 +183,9 @@ namespace Ecom.Infrastructure.Data.migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductItemId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProductItemId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()

@@ -36,7 +36,11 @@ namespace Ecom.Infrastructure
 
             services.AddScoped<IEmailService , EmailService>();
 
-            services.AddScoped<IGenerateToken ,  GenerateToken>();  
+            services.AddScoped<IGenerateToken ,  GenerateToken>();
+
+            services.AddScoped<IOrderService, OrderService>();
+
+
 
 
             services.AddSingleton<IConnectionMultiplexer>(i =>
@@ -52,6 +56,7 @@ namespace Ecom.Infrastructure
 
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
 
             services.AddDbContext<AppDbContext>(option =>
             {
@@ -90,7 +95,7 @@ namespace Ecom.Infrastructure
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Secret"])),
-                    ValidateIssuer = true,
+                    ValidateIssuer = false,
                     ValidIssuer = configuration["Token:Issuer"], 
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero,

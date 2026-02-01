@@ -40,6 +40,9 @@ namespace Ecom.Infrastructure
 
             services.AddScoped<IOrderService, OrderService>();
 
+            //Register Payment Service 
+
+            services.AddScoped<IPaymentService , PaymentService>();
 
 
 

@@ -18,7 +18,8 @@ namespace Ecom.Core.Entities
         }
         public string Id { get; set; }
 
-        //public List<BasketItem> basketItems = new List<BasketItem>();
+        public string PaymentIntentId  { get; set; }
+        public string  ClientSecret { get; set; }
         public List<BasketItem> BasketItems { get; set; } = new List<BasketItem>();
     }
 }

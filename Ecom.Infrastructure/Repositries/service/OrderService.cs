@@ -18,12 +18,14 @@ namespace Ecom.Infrastructure.Repositries.service
         private readonly IUnitOfWork _unitOfWork;
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IPaymentService _paymentService;
 
-        public OrderService(IUnitOfWork unitOfWork, AppDbContext context, IMapper mapper)
+        public OrderService(IUnitOfWork unitOfWork, AppDbContext context, IMapper mapper, IPaymentService paymentService)
         {
             _unitOfWork = unitOfWork;
             _context = context;
             _mapper = mapper;
+            _paymentService = paymentService;
         }
 
 
@@ -45,7 +47,16 @@ namespace Ecom.Infrastructure.Repositries.service
 
             var ship = _mapper.Map<ShippingAddress>(orderDto.shippingAddress);
 
-            var order = new Orders(BuyerEmail, subTotal, ship, deliveryMethod, orderItems);
+            var ExistOrder = await _context.Orders.Where(x => x.PaymentIntentId == basket.PaymentIntentId).FirstOrDefaultAsync();
+
+            if (ExistOrder != null)
+            {
+                _context.Orders.Remove(ExistOrder);
+                await _paymentService.CreateOrUpdatePaymentAsync(basket.PaymentIntentId , deliveryMethod.Id);
+
+            }
+
+            var order = new Orders(BuyerEmail, subTotal, ship, deliveryMethod, orderItems ,basket.PaymentIntentId);
 
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();

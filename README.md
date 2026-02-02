@@ -2,8 +2,6 @@
 I’ve recently finished building a fully functional E-Commerce Backend using ASP.NET Core, focusing on clean architecture, scalability, and real-world business logic.
 Here’s a summary of the key features and technologies I worked with 👇
 
-📂 GitHub Repository: (https://lnkd.in/dEZAMMRA)
-
 🔹 Architecture & Design
 Clean Architecture
 Repository Pattern & Generic Repository
